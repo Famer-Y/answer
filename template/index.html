@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% if request.session.is_login %}
+    欢迎{{ request.session.username }}
+    <a href="/book/createbook/">创建书单</a>
+    <a href="/book/booklist/">我的书单</a>
+    <a href="/logout/">退出</a>
+{% endif %}
+
+</body>
+</html>

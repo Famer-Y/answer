@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建书单</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        书名：<input type="text" name="name" placeholder="书名-版本-主编"><br/>
+        <select name="type">
+            <option value="外语">外语</option>
+            <option value="金融">金融</option>
+        </select><br/>
+        <input type="submit" value="保存">
+    </form>
+</body>
+</html>
