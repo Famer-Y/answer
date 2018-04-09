@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from app.models import User, Book
+from django.http import HttpResponse
+from app.models import User, Book, Subject
 
 # Create your views here.
 def register(request):
@@ -89,6 +90,37 @@ def book_list(request):
         'books': books
     }
     return render(request, 'book/booklist.html', content)
+
+def book_view(request, id):
+    if not request.session.get('is_login', None):
+        return render(request, 'login.html')
+    check_book = Book.objects.filter(id=id)
+    if check_book:
+        book = Book.objects.get(id=id)
+        sub = Subject.objects.filter(book=book)
+        content = {
+            'book': book,
+            'subject': sub
+        }
+        return render(request, 'book/subject.html', content)
+    return HttpResponse('No Result!!!')
+
+def subject_add_text(request, book_id):
+    if not request.session.get('is_login', None):
+        return render(request, 'login.html')
+    check_book = Book.objects.filter(id=book_id)
+    if not check_book:
+        Info = {
+            'info': '该书单不存在'
+        }
+        return render(request, 'error.html', Info)
+    if request.method == 'POST':
+        content = request.POST.get('content', None)
+        book = Book.objects.get(id=book_id)
+        if content:
+            Subject(content=content, type=1, book=book).save()
+            return render(request, '')
+
 
 
 

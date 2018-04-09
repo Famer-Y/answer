@@ -21,6 +21,7 @@ class Book(models.Model):
         db_table = 'book'
 
 class Subject(models.Model):
+    number = models.CharField(max_length=15)
     content = models.CharField(max_length=512, null=True)
     type = models.IntegerField()
     book = models.ForeignKey('Book', on_delete=models.CASCADE)
