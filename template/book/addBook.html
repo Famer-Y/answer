@@ -5,8 +5,7 @@
     <title>创建书单</title>
 </head>
 <body>
-    {{ info }}
-    <form action="/book/createbook/" method="post">
+    <form action="/book/addBook/" method="post">
         {% csrf_token %}
         书名：<input type="text" name="name" placeholder="书名-版本-主编"><br/>
         <select name="type">

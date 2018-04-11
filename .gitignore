@@ -5,3 +5,7 @@ answer/__pycache__/
 app/__pycache__/
 app/migrations/0001_initial.py
 app/migrations/__pycache__/
+app/migrations/0002_auto_20180411_1523.py
+tool/__pycache__/
+app/migrations/0003_auto_20180411_1524.py
+

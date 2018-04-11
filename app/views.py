@@ -102,7 +102,6 @@ def book_view(request, id):
             'book': book,
             'subject': sub
         }
-        print(sub)
         return render(request, 'book/listSubject.html', content)
     return HttpResponse('No Result!!!')
 
@@ -119,13 +118,45 @@ def subject_add_text(request, book_id):
         content = request.POST.get('content', None)
         number = request.POST.get('number', None)
         book = Book.objects.get(id=book_id)
-        if content:
+        if content and number:
             Subject(content=content, type=1, book=book, number=number).save()
             Info = {
                 'info': '题目添加成功'
             }
             return render(request, 'public/success.html', Info)
+        else :
+            info = {
+                'info': '编号和内容不能为空'
+            }
+            return render(request, 'public/error.html', info)
     return render(request, 'book/addSubject.html')
+
+def subject_add_image(request, book_id):
+    if not request.session.get('is_login', None):
+        return render(request, 'login.html')
+    check_book = Book.objects.filter(id=book_id)
+    if not check_book:
+        Info = {
+            'info': '该书单不存在'
+        }
+        return render(request, 'public/error.html', Info)
+    if request.method == 'POST':
+        number = request.POST.get('number', None)
+        img = request.FILES.get('img', None)
+        if number and img:
+            book = Book.objects.get(id=book_id)
+            Subject(book=book, number=number, img_url=img, type=0).save()
+            Info = {
+                'info': '题目上传成功'
+            }
+            return render(request, 'public/success.html', Info)
+        else:
+            info = {
+                'info': '编号和图片不能为空'
+            }
+            return render(request, 'public/error.html', info)
+
+    return render(request, 'book/addSubjectImg.html')
 
 
 

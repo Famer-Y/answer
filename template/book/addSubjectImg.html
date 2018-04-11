@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>添加问题</title>
+    <title>添加题目图片</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         编号：<input type="text" name="number"><br/>
-        内容:<textarea name="content"></textarea><br/>
+        文件:<input type="file" name="img">
         <input type="submit" value="提交">
     </form>
 </body>
