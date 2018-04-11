@@ -60,7 +60,7 @@ def logout(request):
         request.session.clear()
     return render(request, 'login.html')
 
-def book_create(request):
+def book_add(request):
     if not request.session.get('is_login', None):
         return render(request, 'login.html')
     if request.method == 'POST':
@@ -73,12 +73,12 @@ def book_create(request):
             content = {
                 'info': '书单创建成功'
             }
-            return render(request, 'book/createbook.html', content)
+            return render(request, 'book/addBook.html', content)
         content = {
             'info': '书名和类型不能为空'
         }
-        return render(request, 'book/createbook.html', content)
-    return render(request, 'book/createbook.html')
+        return render(request, 'book/addBook.html', content)
+    return render(request, 'book/addBook.html')
 
 def book_list(request):
     if not request.session.get('is_login', None):
@@ -89,7 +89,7 @@ def book_list(request):
     content = {
         'books': books
     }
-    return render(request, 'book/booklist.html', content)
+    return render(request, 'book/listBook.html', content)
 
 def book_view(request, id):
     if not request.session.get('is_login', None):
@@ -102,7 +102,8 @@ def book_view(request, id):
             'book': book,
             'subject': sub
         }
-        return render(request, 'book/subject.html', content)
+        print(sub)
+        return render(request, 'book/listSubject.html', content)
     return HttpResponse('No Result!!!')
 
 def subject_add_text(request, book_id):
@@ -113,13 +114,18 @@ def subject_add_text(request, book_id):
         Info = {
             'info': '该书单不存在'
         }
-        return render(request, 'error.html', Info)
+        return render(request, 'public/error.html', Info)
     if request.method == 'POST':
         content = request.POST.get('content', None)
+        number = request.POST.get('number', None)
         book = Book.objects.get(id=book_id)
         if content:
-            Subject(content=content, type=1, book=book).save()
-            return render(request, '')
+            Subject(content=content, type=1, book=book, number=number).save()
+            Info = {
+                'info': '题目添加成功'
+            }
+            return render(request, 'public/success.html', Info)
+    return render(request, 'book/addSubject.html')
 
 
 

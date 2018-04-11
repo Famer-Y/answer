@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1> {{ book.name }}</h1>
-<a href="">添加题目</a>
+<a href="/book/{{ book.id }}/createsubject">添加题目</a>
 <ul>
     {% for sub in subject %}
-    <li>{{ sub.name }}</li>
+    <li><label>{{ sub.number }}</label>  {{ sub.content }}</li>
     {% endfor %}
 </ul>
 </body>
